@@ -9,10 +9,31 @@ class IntegrationTest(AsyncTestCase, TestCase):
         super(IntegrationTest, self).setUp()
         reset()
 
-    def test_example(self):
+    def test_stub_and_fetch(self):
         client = AsyncStubHTTPClient()
         stub("/hello").and_return(body="world")
         client.fetch("/hello", self.stop)
         response = self.wait()
         self.assertEqual(response.code, 200)
         self.assertEqual(response.body, "world")
+
+    def test_can_fetch_twice(self):
+        client = AsyncStubHTTPClient()
+        stub("/hello").and_return(body="world")
+        client.fetch("/hello", self.stop)
+        self.wait()
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, "world")
+
+    def test_with_syntax(self):
+        client = AsyncStubHTTPClient()
+        with stub("/hello").and_return(body="world"):
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "world")
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 404)

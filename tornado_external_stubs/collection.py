@@ -19,5 +19,10 @@ class RequestCollection(object):
         return cls._requests[parsed.path][request.method]
 
     @classmethod
+    def remove(cls, request):
+        parsed = urlparse(request.url)
+        del cls._requests[parsed.path][request.method]
+
+    @classmethod
     def reset(cls):
         cls._requests = _new_collection()

@@ -20,3 +20,9 @@ class stub(object):
                 buffer=StringIO(body))
         RequestCollection.add(self.request, self.response_partial)
         return self
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, *args, **kwargs):
+        RequestCollection.remove(self.request)
