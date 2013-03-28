@@ -42,3 +42,9 @@ class CommandsTest(TestCase):
         resp_partial = RequestCollection.find(st.request)
         resp = resp_partial(st.request, 200)
         self.assertEqual(json.loads(resp.body).get('name'), 'somebody')
+
+    def test_no_body(self):
+        st = stub("/hello").and_return(body=None)
+        resp_partial = RequestCollection.find(st.request)
+        resp = resp_partial(st.request, 200)
+        self.assertEqual(resp.body, '') 

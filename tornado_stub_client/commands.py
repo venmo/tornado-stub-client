@@ -20,6 +20,8 @@ class stub(object):
         """
         if not body and body_json:
             body = json.dumps(body_json)
+        if not body:
+            body = ''
         self.response_partial = functools.partial(HTTPResponse,
                 buffer=StringIO(body))
         RequestCollection.add(self.request, self.response_partial)
