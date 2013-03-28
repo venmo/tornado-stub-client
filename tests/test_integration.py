@@ -1,3 +1,5 @@
+# work with python 2.5, doesn't break in newer versions
+from __future__ import with_statement
 from unittest import TestCase
 from tornado.testing import AsyncTestCase
 
