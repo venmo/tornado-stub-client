@@ -40,4 +40,4 @@ class ClientTest(AsyncTestCase, TestCase):
         client.fetch("/nothingasdfads", self.stop)
         response = self.wait()
         self.assertEqual(response.code, 404)
-        self.assertIsNone(response.body)
+        self.assertEqual(response.body, None)

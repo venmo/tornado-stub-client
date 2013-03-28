@@ -39,7 +39,7 @@ class CollectionTest(TestCase):
         RequestCollection.add(req, "response val")
         RequestCollection.remove(req)
         val = RequestCollection.find(req)
-        self.assertIsNone(val)
+        self.assertEqual(val, None)
 
     def test_reset(self):
         req = HTTPRequest("http://www.example.com:8000/hello")
