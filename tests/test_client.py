@@ -42,7 +42,7 @@ class ClientTest(AsyncTestCase, TestCase):
         self.assertEqual(response.code, 404)
         self.assertEqual(response.body, None)
 
-    def test_post_and_git_are_different(self):
+    def test_post_and_get_are_different(self):
         req = HTTPRequest("/hello")
         resp_partial = functools.partial(HTTPResponse,
                 buffer=StringIO("response value"))
