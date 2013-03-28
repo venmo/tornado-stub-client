@@ -32,3 +32,6 @@ class stub(object):
 
     def __exit__(self, *args, **kwargs):
         RequestCollection.remove(self.request)
+
+def reset():
+    RequestCollection.reset()
