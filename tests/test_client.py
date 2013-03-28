@@ -41,3 +41,13 @@ class ClientTest(AsyncTestCase, TestCase):
         response = self.wait()
         self.assertEqual(response.code, 404)
         self.assertEqual(response.body, None)
+
+    def test_post_and_git_are_different(self):
+        req = HTTPRequest("/hello")
+        resp_partial = functools.partial(HTTPResponse,
+                buffer=StringIO("response value"))
+        RequestCollection.add(req, resp_partial)
+
+        AsyncHTTPStubClient().fetch("/hello", self.stop, method="POST")
+        response = self.wait()
+        self.assertEqual(response.code, 404)
