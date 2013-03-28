@@ -2,6 +2,17 @@ from collections import defaultdict
 from urlparse import urlparse
 
 def _new_collection():
+    """ Collection data type is
+            {path: {method: ResponseClass }}
+        So e.g. a POST request to http://venmo.com/feed is stored as
+        {'/feed': {'POST': ResponseClass}}
+
+        the ResponseClass will have had the the constructor partially applied
+        with the specified stubbed data so after finding it we finish
+        instantiatiing with the request we received and return it.
+        Why? So the request attribute on the response is the request that
+        was made, not just the matching criteria in the stub
+    """
     return defaultdict(lambda: defaultdict(lambda: None))
 
 class RequestCollection(object):
