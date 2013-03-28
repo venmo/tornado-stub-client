@@ -2,7 +2,7 @@ from tornado.httpclient import HTTPRequest, HTTPResponse
 
 from .collection import RequestCollection
 
-class AsyncStubHTTPClient(object):
+class AsyncHTTPStubClient(object):
 
     def fetch(self, request, callback=None, **kwargs):
         if not isinstance(request, HTTPRequest):

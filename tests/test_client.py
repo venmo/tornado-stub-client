@@ -5,7 +5,7 @@ from tornado.testing import AsyncTestCase
 from tornado.httpclient import HTTPRequest, HTTPResponse
 
 from tornado_stub_client.collection import RequestCollection
-from tornado_stub_client.httpclient import AsyncStubHTTPClient
+from tornado_stub_client.httpclient import AsyncHTTPStubClient
 
 class ClientTest(AsyncTestCase, TestCase):
 
@@ -18,7 +18,7 @@ class ClientTest(AsyncTestCase, TestCase):
         resp_partial = functools.partial(HTTPResponse,
                 buffer=StringIO("response value"))
         RequestCollection.add(req, resp_partial)
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         client.fetch(req, self.stop)
         response = self.wait()
         self.assertEqual(response.code, 200)
@@ -29,14 +29,14 @@ class ClientTest(AsyncTestCase, TestCase):
         resp_partial = functools.partial(HTTPResponse,
                 buffer=StringIO("response value"))
         RequestCollection.add(req, resp_partial)
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         client.fetch("/hello", self.stop)
         response = self.wait()
         self.assertEqual(response.code, 200)
         self.assertEqual(response.body, "response value")
 
     def test_fetch_wrong_thing_returns_404(self):
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         client.fetch("/nothingasdfads", self.stop)
         response = self.wait()
         self.assertEqual(response.code, 404)

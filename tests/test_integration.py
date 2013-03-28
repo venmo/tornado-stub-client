@@ -3,7 +3,7 @@ from __future__ import with_statement
 from unittest import TestCase
 from tornado.testing import AsyncTestCase
 
-from tornado_stub_client import stub, reset, AsyncStubHTTPClient
+from tornado_stub_client import stub, reset, AsyncHTTPStubClient
 
 class IntegrationTest(AsyncTestCase, TestCase):
 
@@ -12,7 +12,7 @@ class IntegrationTest(AsyncTestCase, TestCase):
         reset()
 
     def test_stub_and_fetch(self):
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         stub("/hello").and_return(body="world")
         client.fetch("/hello", self.stop)
         response = self.wait()
@@ -20,7 +20,7 @@ class IntegrationTest(AsyncTestCase, TestCase):
         self.assertEqual(response.body, "world")
 
     def test_can_fetch_twice(self):
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         stub("/hello").and_return(body="world")
         client.fetch("/hello", self.stop)
         self.wait()
@@ -30,7 +30,7 @@ class IntegrationTest(AsyncTestCase, TestCase):
         self.assertEqual(response.body, "world")
 
     def test_with_syntax(self):
-        client = AsyncStubHTTPClient()
+        client = AsyncHTTPStubClient()
         with stub("/hello").and_return(body="world"):
             client.fetch("/hello", self.stop)
             response = self.wait()

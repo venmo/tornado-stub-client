@@ -1,4 +1,4 @@
-from .httpclient import AsyncStubHTTPClient
+from .httpclient import AsyncHTTPStubClient
 from .collection import RequestCollection
 from .commands import stub
 

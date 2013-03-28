@@ -13,13 +13,13 @@ Similar to [HTTPretty](https://github.com/gabrielfalcao/HTTPretty) but this just
 # Say it has a get_user(id, callback) method that sends a GET to /user/:id and
 # returns json, and we want to stub it out
 import tornado
-from tornado_stub_client import stub, reset, AsyncStubHTTPClient
+from tornado_stub_client import stub, reset, AsyncHTTPStubClient
 
 class MyAppTest(tornado.testing.AsyncTestCase):
 
     def test_one(self):
         myclient = SomeAsyncRestClient()
-        myclient.http_client = AsyncStubHTTPClient() 
+        myclient.http_client = AsyncHTTPStubClient() 
         with stub("http://api.example.com/user/10").and_return(
                 body_json={'name': 'Danny Cosson',
                            'twitter_handle': '@dannycosson'}):
