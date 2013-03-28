@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from tornado_external_stubs.commands import stub
+from tornado_stub_client.commands import stub
 
 
 class CommandsTest(TestCase):

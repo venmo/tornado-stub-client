@@ -1,7 +1,7 @@
 from unittest import TestCase
 from tornado.testing import AsyncTestCase
 
-from tornado_external_stubs import stub, reset, AsyncStubHTTPClient
+from tornado_stub_client import stub, reset, AsyncStubHTTPClient
 
 class IntegrationTest(AsyncTestCase, TestCase):
 

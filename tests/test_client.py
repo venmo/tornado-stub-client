@@ -4,8 +4,8 @@ from cStringIO import StringIO
 from tornado.testing import AsyncTestCase
 from tornado.httpclient import HTTPRequest, HTTPResponse
 
-from tornado_external_stubs.collection import RequestCollection
-from tornado_external_stubs.httpclient import AsyncStubHTTPClient
+from tornado_stub_client.collection import RequestCollection
+from tornado_stub_client.httpclient import AsyncStubHTTPClient
 
 class ClientTest(AsyncTestCase, TestCase):
 

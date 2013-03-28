@@ -1,8 +1,8 @@
 from unittest import TestCase
 from tornado.httpclient import HTTPRequest
 
-from tornado_external_stubs.collection import (RequestCollection,
-                                               _new_collection)
+from tornado_stub_client.collection import (RequestCollection,
+                                            _new_collection)
 
 class CollectionTest(TestCase):
 
