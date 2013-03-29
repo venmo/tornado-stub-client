@@ -29,6 +29,36 @@ class IntegrationTest(AsyncTestCase, TestCase):
         self.assertEqual(response.code, 200)
         self.assertEqual(response.body, "world")
 
+    def test_can_queue_stub_responses(self):
+        client = AsyncHTTPStubClient()
+        stub("/hello").and_return(body="hello")\
+                      .and_return(body="beautiful")\
+                      .and_return(body="world")
+
+        # First Response
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, "hello")
+
+        # Second Response
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, "beautiful")
+
+        # Third Response
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, "world")
+
+        # Fourth Response
+        client.fetch("/hello", self.stop)
+        response = self.wait()
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, "hello")
+
     def test_with_syntax(self):
         client = AsyncHTTPStubClient()
         with stub("/hello").and_return(body="world"):
