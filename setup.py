@@ -9,7 +9,5 @@ setup(
     long_description=open("README.md").read(),
     url="https://github.com/venmo/tornado-stub-client",
     packages=["tornado_stub_client"],
-    install_requires=[
-        "tornado>=2.0",
-    ],
+    requires=["tornado"],
 )
