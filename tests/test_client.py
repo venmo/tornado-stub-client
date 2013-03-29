@@ -16,7 +16,7 @@ class ClientTest(AsyncTestCase, TestCase):
     def test_add_then_fetch(self):
         req = HTTPRequest("/hello")
         resp_partial = functools.partial(HTTPResponse,
-                buffer=StringIO("response value"))
+                code=200, buffer=StringIO("response value"))
         RequestCollection.add(req, resp_partial)
         client = AsyncHTTPStubClient()
         client.fetch(req, self.stop)
@@ -27,7 +27,7 @@ class ClientTest(AsyncTestCase, TestCase):
     def test_fetch_string_converts_to_request_object(self):
         req = HTTPRequest("/hello")
         resp_partial = functools.partial(HTTPResponse,
-                buffer=StringIO("response value"))
+                code=200, buffer=StringIO("response value"))
         RequestCollection.add(req, resp_partial)
         client = AsyncHTTPStubClient()
         client.fetch("/hello", self.stop)

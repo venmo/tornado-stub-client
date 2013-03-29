@@ -21,7 +21,7 @@ class CommandsTest(TestCase):
         st = stub("/hello")
         req = st.request
         st = st.and_return(body="foobar body")
-        response = st.response_partial(req, 200)
+        response = st.response_partial(req)
         self.assertEquals(response.code, 200)
         self.assertEquals(response.body, "foobar body")
         self.assertEquals(response.request.url, "/hello")
@@ -40,23 +40,23 @@ class CommandsTest(TestCase):
     def test_return_with_body_json(self):
         st = stub("/hello").and_return(body_json={'name': 'somebody'})
         resp_partial = RequestCollection.find(st.request)
-        resp = resp_partial(st.request, 200)
+        resp = resp_partial(st.request)
         self.assertEqual(json.loads(resp.body).get('name'), 'somebody')
 
     def test_no_body(self):
         st = stub("/hello").and_return(body=None)
         resp_partial = RequestCollection.find(st.request)
-        resp = resp_partial(st.request, 200)
+        resp = resp_partial(st.request)
         self.assertEqual(resp.body, '') 
 
     def test_no_return_args(self):
         st = stub("/hello").and_return()
         resp_partial = RequestCollection.find(st.request)
-        resp = resp_partial(st.request, 200)
+        resp = resp_partial(st.request)
         self.assertEqual(resp.body, '') 
 
-    # def test_set_response_code_in_stub(self):
-    #     st = stub("/hello").and_return(code=201)
-    #     resp_partial = RequestCollection.find(st.request)
-    #     resp = resp_partial(st.request)
-    #     self.assertEqual(resp.code, 201)
+    def test_set_response_code_in_stub(self):
+        st = stub("/hello").and_return(code=418)
+        resp_partial = RequestCollection.find(st.request)
+        resp = resp_partial(st.request)
+        self.assertEqual(resp.code, 418)

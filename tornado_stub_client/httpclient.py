@@ -9,7 +9,7 @@ class AsyncHTTPStubClient(object):
             request = HTTPRequest(url=request, **kwargs)
         response_partial = RequestCollection.find(request)
         if response_partial:
-            resp = response_partial(request, 200)
+            resp = response_partial(request)
         else:
             resp = HTTPResponse(request, 404)
         callback(resp)
