@@ -41,33 +41,33 @@ class MyAppTest(tornado.testing.AsyncTestCase):
         queued responses. Handy for testing endpoints that handle state.
         """
         client = AsyncHTTPStubClient()
-        stub("/hello").and_return(body="hello")\
+        with stub("/hello").and_return(body="hello")\
                       .and_return(body="beautiful")\
-                      .and_return(body="world")
+                      .and_return(body="world"):
 
-        # First Response
-        client.fetch("/hello", self.stop)
-        response = self.wait()
-        self.assertEqual(response.code, 200)
-        self.assertEqual(response.body, "hello")
+            # First Response
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "hello")
 
-        # Second Response
-        client.fetch("/hello", self.stop)
-        response = self.wait()
-        self.assertEqual(response.code, 200)
-        self.assertEqual(response.body, "beautiful")
+            # Second Response
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "beautiful")
 
-        # Third Response
-        client.fetch("/hello", self.stop)
-        response = self.wait()
-        self.assertEqual(response.code, 200)
-        self.assertEqual(response.body, "world")
+            # Third Response
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "world")
 
-        # Fourth Response
-        client.fetch("/hello", self.stop)
-        response = self.wait()
-        self.assertEqual(response.code, 200)
-        self.assertEqual(response.body, "hello")
+            # Fourth Response
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "hello")
 ```
 
 See `tests/test_integration.py` for working tests/example code.
