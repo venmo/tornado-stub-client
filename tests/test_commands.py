@@ -26,11 +26,11 @@ class CommandsTest(TestCase):
         self.assertEquals(response.body, "foobar body")
         self.assertEquals(response.request.url, "/hello")
 
-    def test_init_stub_creates_blank_response_partial(self):
+    def test_stub_no_return_doesnt_add_to_collection(self):
         st = stub("/hello")
-        response = st.response_partial(st.request, 200)
-        self.assertEquals(response.code, 200)
-        self.assertEquals(response.body, None)
+        self.assertNotEqual(st.request, None)
+        resp_partial = RequestCollection.find(st.request)
+        self.assertEqual(resp_partial, None)
 
     def test_stub_with_method(self):
         st = stub("/hello", method="POST").and_return(body="anything")
@@ -48,3 +48,15 @@ class CommandsTest(TestCase):
         resp_partial = RequestCollection.find(st.request)
         resp = resp_partial(st.request, 200)
         self.assertEqual(resp.body, '') 
+
+    def test_no_return_args(self):
+        st = stub("/hello").and_return()
+        resp_partial = RequestCollection.find(st.request)
+        resp = resp_partial(st.request, 200)
+        self.assertEqual(resp.body, '') 
+
+    # def test_set_response_code_in_stub(self):
+    #     st = stub("/hello").and_return(code=201)
+    #     resp_partial = RequestCollection.find(st.request)
+    #     resp = resp_partial(st.request)
+    #     self.assertEqual(resp.code, 201)
