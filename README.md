@@ -37,6 +37,24 @@ class MyAppTest(tornado.testing.AsyncTestCase):
             mylib.get_user(10, self.stop)
             response_dict = self.wait()
             self.assertEquals(response_dict.get('name'), 'Danny Cosson')
+
+    def test_can_queue_stub_responses(self):
+        """ A stub supports round-robin responses, i.e., a stub will cycle through
+        queued responses. Handy for testing endpoints that handle state.
+        """
+        client = AsyncHTTPStubClient()
+        with stub("/hello").and_return(body="hello")\
+                           .and_return(body="world"):
+
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "hello")
+
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "world")
 ```
 
 See `tests/test_integration.py` for working tests/example code.
