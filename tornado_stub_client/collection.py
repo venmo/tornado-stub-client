@@ -28,9 +28,13 @@ class RequestCollection(object):
     @classmethod
     def find(cls, request):
         parsed = urlparse(request.url)
-        head = cls._requests[parsed.path][request.method][0]
-        cls._requests[parsed.path][request.method] = \
-                cls._requests[parsed.path][request.method][1:] + (head,)
+        responses = cls._requests[parsed.path][request.method]
+        if len(responses) > 0:
+            head = responses[0]
+            cls._requests[parsed.path][request.method] = \
+                    cls._requests[parsed.path][request.method][1:] + (head,)
+        else:
+            head = None
         return head
 
     @classmethod
