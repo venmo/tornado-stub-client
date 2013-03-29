@@ -10,7 +10,6 @@ class stub(object):
 
     def __init__(self, url, *args, **kwargs):
         self.request = HTTPRequest(url, *args, **kwargs)
-        self.response_partial = HTTPResponse
 
     def and_return(self, body=None, body_json=None):
         """ When we get the response details in this call, we'll partially
