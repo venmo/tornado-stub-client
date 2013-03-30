@@ -1,5 +1,7 @@
 ## Tornado Stub Client
 
+[![Build Status](https://travis-ci.org/venmo/tornado-stub-client.png?branch=master)](https://travis-ci.org/venmo/tornado-stub-client)
+
 A library for stubbing async calls to external services in tornado.  It stubs out AsyncHTTPClient.fetch, to be precise (but there's no need to be precise, that's the only asynchronous method in all of Tornado).  It works well but it's brand new, I have a couple more features to add.
 
 Similar to [HTTPretty](https://github.com/gabrielfalcao/HTTPretty) but this just patches the `fetch()` method directly rather than the python socket.  Writing a new library was easier than trying to get HTTPretty to work with the tornado async client.  If there's interest it would be easy enough to make this work with other http libs, e.g. requests or grequests, but you should probably just use HTTPretty.
@@ -35,6 +37,24 @@ class MyAppTest(tornado.testing.AsyncTestCase):
             mylib.get_user(10, self.stop)
             response_dict = self.wait()
             self.assertEquals(response_dict.get('name'), 'Danny Cosson')
+
+    def test_can_queue_stub_responses(self):
+        """ A stub supports round-robin responses, i.e., a stub will cycle through
+        queued responses. Handy for testing endpoints that handle state.
+        """
+        client = AsyncHTTPStubClient()
+        with stub("/hello").and_return(body="hello")\
+                           .and_return(body="world"):
+
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "hello")
+
+            client.fetch("/hello", self.stop)
+            response = self.wait()
+            self.assertEqual(response.code, 200)
+            self.assertEqual(response.body, "world")
 ```
 
 See `tests/test_integration.py` for working tests/example code.

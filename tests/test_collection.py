@@ -19,13 +19,13 @@ class CollectionTest(TestCase):
     def test_add(self):
         req = HTTPRequest("/hello")
         RequestCollection.add(req, "response val")
-        val = RequestCollection._requests["/hello"]["GET"]
+        val = RequestCollection._requests["/hello"]["GET"][0]
         self.assertEqual(val, "response val")
 
     def test_add_with_absolute_url(self):
         req = HTTPRequest("http://www.example.com:8000/hello")
         RequestCollection.add(req, "response val")
-        val = RequestCollection._requests["/hello"]["GET"]
+        val = RequestCollection._requests["/hello"]["GET"][0]
         self.assertEqual(val, "response val")
 
     def test_find_after_add(self):
