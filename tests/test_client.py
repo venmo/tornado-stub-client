@@ -1,6 +1,9 @@
+# python 3 has different package names
+try: from cStringIO import StringIO
+except ImportError: from io import StringIO
+
 from unittest import TestCase
 import functools
-from cStringIO import StringIO
 from tornado.testing import AsyncTestCase
 from tornado.httpclient import HTTPRequest, HTTPResponse
 

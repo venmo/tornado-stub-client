@@ -1,5 +1,8 @@
+# python 3 has different package names
+try: from urlparse import urlparse
+except ImportError: from urllib.parse import urlparse
+
 from collections import defaultdict
-from urlparse import urlparse
 
 def _new_collection():
     """ Collection data type is

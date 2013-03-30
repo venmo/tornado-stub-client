@@ -1,7 +1,9 @@
-try: import simplejson as json
-except ImportError: import json
+# python 3 has different package names
+try: from cStringIO import StringIO
+except ImportError: from io import StringIO
+
+import json
 import functools
-from cStringIO import StringIO
 from tornado.httpclient import HTTPRequest, HTTPResponse
 
 from .collection import RequestCollection
