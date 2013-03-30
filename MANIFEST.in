@@ -1,0 +1,6 @@
+include README.md
+include setup.py
+include tornado_stub_client/__init__.py
+include tornado_stub_client/collection.py
+include tornado_stub_client/commands.py
+include tornado_stub_client/httpclient.py
