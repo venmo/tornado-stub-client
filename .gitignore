@@ -3,6 +3,8 @@
 
 .virtualenv*
 build
+MANIFEST
+dist
 
 # created when you do `pip install -e .`
 tornado_stub_client.egg-info
