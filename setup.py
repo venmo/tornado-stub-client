@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
     name="tornado-stub-client",
-    version="0.1",
+    version="0.2dev",
     author="Danny Cosson",
     author_email="support@venmo.com",
     license="MIT",
